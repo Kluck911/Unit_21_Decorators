@@ -1,4 +1,5 @@
 from datetime import datetime
+from decorators import do_twice
 
 
 def working_hours(func):
@@ -9,9 +10,16 @@ def working_hours(func):
             pass  # Нерабочее время, выходим
     return wrapper
 
+
 @working_hours
 def writing_tests():
     print("Я пишу тесты на python!")
 
-writing_tests()
 
+@do_twice
+def test_twice():
+    print('Двойной декоратор')
+
+
+writing_tests()
+test_twice()
