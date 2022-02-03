@@ -22,6 +22,9 @@ def test_twice(str):
     return "Done"
 
 
+print(test_twice.__name__)
+
+
 decorated_value = test_twice("single")
 print(decorated_value)
 
