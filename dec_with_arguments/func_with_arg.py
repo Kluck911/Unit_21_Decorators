@@ -1,4 +1,4 @@
-from decorators import do_twice
+from decorators import do_twice, debug
 
 
 @do_twice
@@ -22,13 +22,25 @@ def test_twice(str):
     return "Done"
 
 
-print(test_twice.__name__)
+@debug
+def age_passed(name, age=None):
+    if age is None:
+        return "Необходимо передать значение age"
+    else:
+        return "Аргументы по умолчанию заданы!"
 
+
+age_passed("Роман")
+age_passed("Роман", age=21)
+
+
+'''
+print(test_twice.__name__)
 
 decorated_value = test_twice("single")
 print(decorated_value)
 
-
-'''test_twice_without_params()
+test_twice_without_params()
 test_twice_2_params("1", "2")
-test_twice("single")'''
+test_twice("single")
+'''
