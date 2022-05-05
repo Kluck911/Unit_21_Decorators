@@ -8,3 +8,6 @@ def my_decorator(func):
 @my_decorator
 def my_first_decorator():
     print('Это мой первый декоратор!')
+
+
+my_first_decorator()
