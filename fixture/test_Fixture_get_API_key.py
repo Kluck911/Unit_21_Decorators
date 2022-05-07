@@ -1,5 +1,6 @@
 import pytest
 import requests
+from datetime import datetime
 
 
 @pytest.fixture()
@@ -17,3 +18,11 @@ def test_getAllPets(get_key):
                             headers={"Cookie": get_key})
     assert response.status_code == 200, 'Запрос выполнен неуспешно'
     assert len(response.json().get('pets')) > 0, 'Количество питомцев не соответствует ожиданиям'
+
+
+@pytest.fixture(autouse=True)
+def time_delta():
+    start_time = datetime.now()
+    yield
+    end_time = datetime.now()
+    print(f'\nТест шел: {end_time - start_time}')
