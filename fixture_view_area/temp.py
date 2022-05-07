@@ -3,13 +3,14 @@ import requests
 from datetime import datetime
 
 
-@pytest.fixture(scope='class')
-def get_key():
+@pytest.fixture(scope="class")
+def get_key(request):
+    # переменные email и password нужно заменить своими учетными данными
     response = requests.post(url='https://petfriends1.herokuapp.com/login',
                              data={"email": 'afvaegffewafgwe@gmail.com', "pass": 'afwwfwaffaw'})
     assert response.status_code == 200, 'Запрос выполнен неуспешно'
     assert 'Cookie' in response.request.headers, 'В запросе не передан ключ авторизации'
-    print('\nreturn auth_key')
+    print("\nreturn auth_key")
     return response.request.headers.get('Cookie')
 
 
@@ -17,13 +18,6 @@ def get_key():
 def request_fixture(request):
     if 'Pets' in request.function.__name__:
         print(f"\nЗапущен тест из сьюта Дом Питомца: {request.function.__name__}")
-
-
-def test_getAllPets(get_key):
-    response = requests.get(url='https://petfriends1.herokuapp.com/api/pets',
-                            headers={"Cookie": get_key})
-    assert response.status_code == 200, 'Запрос выполнен неуспешно'
-    assert len(response.json().get('pets')) > 0, 'Количество питомцев не соответствует ожиданиям'
 
 
 class TestClassPets:
@@ -44,9 +38,9 @@ class TestClassPets:
         pass
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture()
 def time_delta():
     start_time = datetime.now()
     yield
-    end_time = datetime.now()
-    print(f'\nТест шел: {end_time - start_time}')
+    stop_time = datetime.now()
+    print(f'Время теста: {stop_time - start_time}')
